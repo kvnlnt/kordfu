@@ -6,46 +6,46 @@ describe("App", function() {
   beforeEach(function() {
 
     controller = {
-      page_one:   function(){},
-      page_two:   function(){},
-      page_three: function(){}
+      path_one:   function(){},
+      path_two:   function(){},
+      path_three: function(){}
     };
 
 
-    pages  = {
-      '/path_one'   : controller.page_one, 
-      '/path_two'   : controller.page_two, 
-      '/path_three' : controller.page_three
+    paths  = {
+      '/path_one'   : controller.path_one, 
+      '/path_two'   : controller.path_two, 
+      '/path_three' : controller.path_three
     };
 
-    app = new App(pages);
+    app = new App(paths);
 
   });
 
-  it("should be able to get pages", function() {
-    expect(app.getPages()).toEqual(pages);
+  it("should be able to get paths", function() {
+    expect(app.getPaths()).toEqual(paths);
   });
 
-  it("should be able to add page", function() {
-    page = '/page_four';
-    controller.page_four = function(){};
-    app.addPage(page, controller.page_four);
-    expect(app.getPage(page)).toEqual(controller.page_four);
+  it("should be able to add path", function() {
+    path = '/path_four';
+    controller.path_four = function(){};
+    app.addPath(path, controller.path_four);
+    expect(app.getPath(path)).toEqual(controller.path_four);
   });
 
-  it("should be able to remove page", function() {
-    app.removePage('/path_one');
-    app.removePage('/path_two');
-    expect(app.getPages()).toEqual({ '/path_three':controller.page_three });
+  it("should be able to remove path", function() {
+    app.removePath('/path_one');
+    app.removePath('/path_two');
+    expect(app.getPaths()).toEqual({ '/path_three':controller.path_three });
   });
 
   it("should be able to get selected key", function() {
-    expect(app.getCurrentPage()).toEqual(null);
+    expect(app.getCurrentPath()).toEqual(null);
   });
 
   it("should be able to set selected key", function() {
-    app.setCurrentPage('/path_one');
-    expect(app.getCurrentPage()).toEqual('/path_one');
+    app.setCurrentPath('/path_one');
+    expect(app.getCurrentPath()).toEqual('/path_one');
   });
 
 });

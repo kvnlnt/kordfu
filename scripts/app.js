@@ -1,58 +1,78 @@
 /**
- * The App. App stores pages and notifies
+ * The App. App stores paths and notifies
  * observers about changes.
  */
 
-var App = function(pages) {
+var App = function(paths, page_id) {
 
-    this.Pages        = pages || {};
-    this.CurrentPage  = null;
+    this.container_id = page_id || 'page';
+    this.container    = $('#'+this.container_id);
+    this.Paths        = paths || {};
+    this.CurrentPath  = null;
     this.Router       = new Router();
-    this.pageAdded    = new Pubsub(this);
-    this.pageRemoved  = new Pubsub(this);
-    this.pageChanged  = new Pubsub(this);
+    this.pathAdded    = new Pubsub(this);
+    this.pathRemoved  = new Pubsub(this);
+    this.pathChanged  = new Pubsub(this);
 
 };
 
 App.prototype = {
 
-    init: function(){
-        // this.Router.routeChanged.sub(this.setCurrentPage);
-        // this.Router.watch();
+    init: function(path){
+        var _this = this;
+        var path  = path || this.Router.getRouteByHash();
+
+        // add default paths
+        this.addPath('/404', Errors._404);
+
+        // setup router
+        this.Router.routeChanged.sub(function(e){ _this.load(e.route); });
+        this.Router.watch();
+
+        // load default path
+        this.load(path);
     },
 
-    getPages: function() {
-        return this.Pages;
+    load: function(path){
+        this.setCurrentPath(this.getPath(path));
+        this.getCurrentPath()(this.container);
     },
 
-    getPage: function(page){
-        return this.Pages[page];
+    getPaths: function() {
+        return this.Paths;
     },
 
-    addPage: function(page, controller) {
-        this.Pages[page] = controller;
-        this.pageAdded.pub({ page: page });
+    getPath: function(path){
+        return this.Paths[path];
+    },
+
+    addPath: function(path, controller) {
+
+        // keep router paths and app paths in sync
+        this.Router.addRoute(path);
+        this.Paths[path] = controller;
+        this.pathAdded.pub({ path: path });
         return this;
     },
 
-    removePage: function(page) {
-        var deleted_page;
-        deleted_page = this.Pages[page];
-        delete this.Pages[page];
-        this.pageRemoved.pub({ page: deleted_page });
-        if (deleted_page === this.CurrentPage) { this.setCurrentPage(null); }
+    removePath: function(path) {
+        var deleted_path;
+        deleted_path = this.Paths[path];
+        delete this.Paths[path];
+        this.pathRemoved.pub({ path: deleted_path });
+        if (deleted_path === this.CurrentPath) { this.setCurrentPath(null); }
         return this;
     },
 
-    getCurrentPage: function() {
-        return this.CurrentPage;
+    getCurrentPath: function() {
+        return this.CurrentPath;
     },
     
-    setCurrentPage: function(page) {
+    setCurrentPath: function(path) {
         var previous;
-        previous = this.CurrentPage;
-        this.CurrentPage = page;
-        this.pageChanged.pub({ page: page, previous: previous });
+        previous = this.CurrentPath;
+        this.CurrentPath = path;
+        this.pathChanged.pub(path, previous);
         return this;
     },
     

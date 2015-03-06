@@ -56,14 +56,14 @@ Router.prototype = {
         hash = hash.indexOf('#') !== -1 ? hash.replace('#','') : hash;
         var path  = '' == hash ? '/' : hash;
         var route = this.Routes[path];
-
+        route = route === undefined ? '/404' : route;
         return route;
 
     },
 
     watch:function(interval){
 
-        var that       = this;
+        var _this       = this;
         var interval   = interval || 100;
         var storedHash = window.location.hash;
 
@@ -71,10 +71,16 @@ Router.prototype = {
 
             // if hash changes, announce
             if (window.location.hash != storedHash) {
-                var previous = that.getRouteByHash(storedHash);
-                var route    = that.getRouteByHash();
-                storedHash   = window.location.hash;
-                that.routeChanged.pub(route, previous);
+
+                var route    = _this.getRouteByHash();
+                var is_valid = route !== undefined;
+
+                // only change if route exists
+                if(is_valid){
+                    var previous = _this.getRouteByHash(storedHash);
+                    storedHash   = window.location.hash;
+                    _this.routeChanged.pub({ route:route, previous:previous });
+                }
             }
 
         };

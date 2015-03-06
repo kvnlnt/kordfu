@@ -4,7 +4,20 @@
  */
 
 var Controller = {
-    page_one: function(){},
-    page_two: function(){},
-    page_three: function(){}
+    dashboard: function(container){
+        container.html('dashboard');
+        console.log('dashboard');
+    },
+    page_one: function(container){
+        container.html('one');
+        console.log('page one');
+    },
+    page_two: function(container){
+        container.html('page_two');
+        console.log('page two');
+    },
+    page_three: function(container){
+        container.html('three');
+        console.log('page three');
+    }
 };

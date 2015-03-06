@@ -1,0 +1,65 @@
+https://alexatnet.com/articles/model-view-controller-mvc-javascript
+
+
+// API:
+
+
+var kordfu = {
+
+    routes: {
+        '/page/one':   [Controller, 'page_one'],
+        '/page/two':   [Controller, 'page_two'],
+        '/page/three': [Controller, 'page_three']
+    },
+
+};
+
+// controllers are what create and connect all the parts
+var controller = new Controller();
+
+// a router "is" the app
+var router = new Router();
+
+// register routes
+router
+.addRoute('/page/one',   controller.page_one);
+.addRoute('/page/two',   controller.page_two);
+.addRoute('/page/three', controller.page_three);
+ 
+
+// inside a controller
+var Controller = function(){
+    this.current_page = this.page_one;
+};
+
+Controller.prototype = {
+  
+    page_one: function(){
+
+        // create model and view instances
+        var view = new View();
+        var model = new Model();
+
+        // tie events
+        model.someEvent.sub(view.someFunction);
+
+        // render view
+        view.render();
+
+    },
+
+    page_two: function(){
+
+        // create model and view instances
+        var view = new View();
+        var model = new Model();
+
+        // tie events
+        model.someEvent.sub(view.someFunction);
+
+        // render view
+        view.render();
+
+    }
+
+};

@@ -1,4 +1,4 @@
-describe("App", function() {
+describe("Core:App", function() {
   
   var app;
   var controller;
@@ -18,7 +18,7 @@ describe("App", function() {
       '/path_three' : controller.path_three
     };
 
-    app = new App(paths);
+    app = App.create(paths);
 
   });
 

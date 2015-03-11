@@ -1,29 +1,24 @@
-/**
- * The App. App stores paths and notifies
- * observers about changes.
- */
+var App = {
 
-var App = function(paths, page_id) {
-
-    this.container_id = page_id || 'page';
-    this.container    = $('#'+this.container_id);
-    this.Paths        = paths || {};
-    this.CurrentPath  = null;
-    this.Router       = new Router();
-    this.pathAdded    = new Pubsub(this);
-    this.pathRemoved  = new Pubsub(this);
-    this.pathChanged  = new Pubsub(this);
-
-};
-
-App.prototype = {
+    create:function(container_id, paths){
+        var newApp          = Object.create(this);
+        newApp.container_id = container_id || 'container';
+        newApp.container    = $('#'+newApp.container_id);
+        newApp.Paths        = paths || {};
+        newApp.CurrentPath  = null;
+        newApp.Router       = Router.create();
+        newApp.pathAdded    = Pubsub.create(this);
+        newApp.pathRemoved  = Pubsub.create(this);
+        newApp.pathChanged  = Pubsub.create(this);
+        return newApp;
+    },
 
     init: function(path){
         var _this = this;
         var path  = path || this.Router.getRouteByHash();
 
         // add default paths
-        this.addPath('/404', Errors._404);
+        this.addPath('/404', Controller._404);
 
         // setup router
         this.Router.routeChanged.sub(function(e){ _this.load(e.route); });
@@ -75,5 +70,5 @@ App.prototype = {
         this.pathChanged.pub(path, previous);
         return this;
     },
-    
+
 };

@@ -4,20 +4,31 @@
     <title>Lucille</title>
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <script type="text/javascript" src="vendor/jquery.js"></script>
-    <script type="text/javascript" src="scripts/errors.js"></script>
-    <script type="text/javascript" src="scripts/pubsub.js"></script>
-    <script type="text/javascript" src="scripts/router.js"></script>
-    <script type="text/javascript" src="scripts/model.js"></script>
-    <script type="text/javascript" src="scripts/modelCollection.js"></script>
-    <script type="text/javascript" src="scripts/view.js"></script>
-    <script type="text/javascript" src="scripts/viewCollection.js"></script>
-    <script type="text/javascript" src="scripts/app.js"></script>
-    <script type="text/javascript" src="scripts/controller.js"></script>
+
+    <!-- core -->
+    <script type="text/javascript" src="scripts/core/util.js"></script>
+    <script type="text/javascript" src="scripts/core/part.js"></script>
+    <script type="text/javascript" src="scripts/core/pubsub.js"></script>
+    <script type="text/javascript" src="scripts/core/router.js"></script>
+    <script type="text/javascript" src="scripts/core/record.js"></script>
+    <script type="text/javascript" src="scripts/core/view.js"></script>
+    <script type="text/javascript" src="scripts/core/controller.js"></script>
+    <script type="text/javascript" src="scripts/core/app.js"></script>
+
+    <!-- parts -->
+    <script type="text/javascript" src="scripts/parts/home.js"></script>
+
+    <!-- views -->
+    <script type="text/javascript" src="scripts/views/home.js"></script>
+
+    <!-- controllers -->
+    <script type="text/javascript" src="scripts/controllers/main.js"></script>
+
 </head>
 
 <body>
 
-    <div id="page"></div>
+    <div id="container"></div>
     <a href="#">home</a>
     <a href="#/page/one">one</a>
     <a href="#/page/two">two</a>

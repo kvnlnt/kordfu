@@ -1,4 +1,4 @@
-describe("Router", function() {
+describe("Core:Router", function() {
   
   var router;
   var data;
@@ -9,7 +9,7 @@ describe("Router", function() {
       '/path_two'   : '/path_two', 
       '/path_three' : '/path_three'
     };
-    router = new Router(data);
+    router = Router.create(data);
   });
 
   it("should be able to get items", function() {

@@ -1,11 +1,11 @@
-describe("Pubub", function() {
+describe("Core:Pubub", function() {
 
     var pubsub, callback = null;
 
     beforeEach(function() {
 
         callback = jasmine.createSpy();
-        pubsub = new Pubsub(this);
+        pubsub = Pubsub.create(this);
         pubsub.sub(callback);
         pubsub.pub('test');
 

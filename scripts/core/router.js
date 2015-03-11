@@ -1,19 +1,14 @@
-/**
- * The Router. Router stores routes and notifies
- * observers about changes.
- */
+var Router = {
 
-var Router = function(routes) {
-
-    this.Routes        = routes || {};
-    this.CurrentRoute  = null;
-    this.routeAdded    = new Pubsub(this);
-    this.routeRemoved  = new Pubsub(this);
-    this.routeChanged  = new Pubsub(this);
-
-};
-
-Router.prototype = {
+    create:function(routes){
+        var newRouter          = Object.create(this);
+        newRouter.Routes       = routes || {};
+        newRouter.CurrentRoute = null;
+        newRouter.routeAdded   = Pubsub.create(this);
+        newRouter.routeRemoved = Pubsub.create(this);
+        newRouter.routeChanged = Pubsub.create(this);
+        return newRouter;
+    },
 
     getRoutes: function() {
         return this.Routes;
@@ -89,5 +84,5 @@ Router.prototype = {
         window.setInterval(loop, interval);
 
     },
-    
+
 };

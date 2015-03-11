@@ -1,19 +1,19 @@
 /**
- * The ViewCollection. ViewCollection stores items and notifies
+ * The Model. Model stores items and notifies
  * observers about changes.
  */
 
-var ViewCollection = function(items) {
+var Model = {
 
-    this.Items                = items;
-    this.SelectedIndex        = -1;
-    this.itemAdded            = new Pubsub(this);
-    this.itemRemoved          = new Pubsub(this);
-    this.selectedIndexChanged = new Pubsub(this);
-
-};
-
-ViewCollection.prototype = {
+    create:function(items){
+        var newModel                  = Object.create(this);
+        newModel.Items                = items;
+        newModel.itemAdded            = Pubsub.create(this);
+        newModel.itemRemoved          = Pubsub.create(this);
+        this.SelectedIndex            = -1;
+        newModel.selectedIndexChanged = Pubsub.create(this);
+        return newModel;
+    },
 
     getItems: function() {
         return [].concat(this.Items);
@@ -45,5 +45,5 @@ ViewCollection.prototype = {
         this.selectedIndexChanged.pub({ previous: previousIndex });
         return this;
     }
-    
+
 };

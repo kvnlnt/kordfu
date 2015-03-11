@@ -2,13 +2,13 @@ var kordfu;
 
 $(document).ready(function(){
 
-    kordfu = new App();
+    kordfu = App.create('container');
 
     kordfu
-    .addPath('/',           Controller.dashboard)
-    .addPath('/page/one',   Controller.page_one)
-    .addPath('/page/two',   Controller.page_two)
-    .addPath('/page/three', Controller.page_three)
+    .addPath('/',           Main.home)
+    .addPath('/page/one',   Main.page_one)
+    .addPath('/page/two',   Main.page_two)
+    .addPath('/page/three', Main.page_three)
     .init();
 
 });

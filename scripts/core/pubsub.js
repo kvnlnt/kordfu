@@ -1,11 +1,11 @@
-var Pubsub = function(puber) {
+var Pubsub = {
 
-    this._puber = puber;
-    this._subscribers = [];
-
-};
-
-Pubsub.prototype = {
+    create: function(publisher){
+        var newPubsub = Object.create(this);
+        newPubsub._publisher = publisher;
+        newPubsub._subscribers = [];
+        return newPubsub;
+    },
 
     sub: function(subr) {
         this._subscribers.push(subr);

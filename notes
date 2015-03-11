@@ -18,7 +18,7 @@ var kordfu = {
 var controller = new Controller();
 
 // a router "is" the app
-var router = new Router();
+var router = Router.create();
 
 // register routes
 router
@@ -37,7 +37,7 @@ Controller.prototype = {
     page_one: function(){
 
         // create model and view instances
-        var view = new View();
+        var view = View.create();
         var model = new Model();
 
         // tie events
@@ -51,7 +51,7 @@ Controller.prototype = {
     page_two: function(){
 
         // create model and view instances
-        var view = new View();
+        var view = View.create();
         var model = new Model();
 
         // tie events

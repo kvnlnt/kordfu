@@ -7,18 +7,20 @@ var Record = {
         return newRecord;
     },
 
-    get: function(){
-        return this.Record;
+    val: function(val){
+        var val = val || null;
+        return null === val ? this.Record : this.Record[val];
     },
 
     set: function(record){
         this.Record = record;
+        this.recordChanged.pub({ record: this.val() });
         return this;
     },
 
     setKeyVal: function(key, val) {
         this.Record[key] = val;
-        this.recordChanged.pub({ record: this.get() });
+        this.recordChanged.pub({ record: this.val() });
         return this;
     },
 
@@ -26,7 +28,7 @@ var Record = {
         var record;
         record = this.Record[key];
         delete this.Record[key];
-        this.recordChanged.pub({ record: this.get() });
+        this.recordChanged.pub({ record: this.val() });
         return this;
     },
 

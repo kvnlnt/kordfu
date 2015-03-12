@@ -6,16 +6,21 @@
 var Main = {
 
     home: function(container){
-        var homePartRecord = Record.create({ welcome:'welcome', user:'Kevin Lint'});
-        var homePart       = HomePart.create(homePartRecord, container);
+
+        var part = Part.create({
+            template: '<strong>{{ welcome }}</strong> {{ user }}',
+            record: { welcome:'welcome', user:'Kevin', kids:['lincoln', 'sydnie'], family:{mom:'Sonja', dad:'Berry'}},
+        });
 
         setTimeout(function(){
-            homePartRecord.setKeyVal('user', 'Nobody');
-            console.log(homePartRecord);
+            if(part.getRecord().val('user') === 'Nobody'){
+                part.getRecord().setKeyVal('user', 'Kevin');
+            } else {
+                part.getRecord().setKeyVal('user', 'Nobody');
+            }
+            
         }, 1000);
 
-
-        // container.html(homePart.get());
     },
 
     page_one: function(container){

@@ -2,53 +2,53 @@ var Part = {
 
     create:function(options){
         var newPart        = Object.create(this);
-        newPart.Options    = options || {};
-        newPart._template  = options.template || '';
-        newPart._record    = options.record || '';
+        newPart._options   = options || {};
+        newPart._jst       = options.jst || '';
+        newPart._data      = options.data || '';
+        newPart._html      = '';
         newPart.compiled   = Pubsub.create(this);
-        newPart.Template   = Template.create(newPart._template) || Template.create();
-        newPart.Record     = Record.create(newPart._record) || Record.create();
-        newPart.Html       = '';
-
-        // compile template
-        newPart.compileTemplate();
-        newPart.Record.recordChanged.sub(newPart.compileTemplate.bind(newPart));
-        
+        newPart.template   = Template.create(newPart._jst) || Template.create();
+        newPart.record     = Record.create(newPart._data) || Record.create();
+        newPart.init();
         return newPart;
     },
 
+    init: function(){
+        this.compileTemplate();
+        this.record.recordChanged.sub(this.compileTemplate.bind(this));
+    },
+
     compileTemplate:function(){
-        var compiled = this.Template.compile(this.Record.val());
-        this.setHtml(compiled.get());
+        var html = this.template.compile(this.record.val());
+        this.setHtml(html.get());
         this.compiled.pub({ html: this.getHtml() });
-        console.log(this.getHtml());
-        return compiled;
+        return html;
     },
 
     getHtml:function(){
-        return this.Html;
+        return this._html;
     },
 
     setHtml:function(html){
-        this.Html = html;
+        this._html = html;
         return this;
     },
 
     getRecord:function(){
-        return this.Record;
+        return this.record;
     },
 
     setRecord:function(record){
-        this.Record = record;
+        this.record = record;
         return this;
     }, 
 
     getTemplate:function(){
-        return this.Template;
+        return this.template;
     },
 
     setTemplate:function(template){
-        this.Template = template;
+        this.template = template;
         return this;
     },
 

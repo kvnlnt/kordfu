@@ -7,27 +7,26 @@ var Main = {
 
     home: function(container){
 
+
         var part = Part.create({
-            template: '<strong>{{ welcome }}</strong> {{ user }}',
-            record: { welcome:'welcome', user:'Kevin', kids:['lincoln', 'sydnie'], family:{mom:'Sonja', dad:'Berry'}},
+            jst: '<strong>{{ welcome }}</strong> {{ user }}',
+            data: { welcome:'welcome', user:'Kevin', kids:['lincoln', 'sydnie'], family:{mom:'Sonja', dad:'Berry'}},
         });
 
-        part.compiled.sub(function(html){
-            container.html(html.html);
-        });
+        var page = Page.create({
+            jst: '<h1>{{ title }}</h1><div id="part">part</div>',
+            data: { title: 'Kordfu'},
+            container: container
+        })
+        .addPart('welcome', part, '#part');
 
-        setTimeout(function(){
+        setInterval(function(){
             if(part.getRecord().val('user') === 'Nobody'){
                 part.getRecord().setKeyVal('user', 'Kevin');
             } else {
                 part.getRecord().setKeyVal('user', 'Nobody');
             }
-            
         }, 1000);
-
-
-
-        
 
     },
 

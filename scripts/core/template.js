@@ -2,30 +2,32 @@ var Template = {
 
     create:function(template){
         var newTemplate       = Object.create(this);
-        newTemplate.Template  = template || {};
-        newTemplate.Compiled  = null;
+        newTemplate._template  = template || {};
+        newTemplate._compiled  = null;
         return newTemplate;
     },
 
     get:function(){
-        return this.Compiled;
+        return this.getCompiled();
+    },
+
+    getCompiled:function(){
+        return this._compiled;
+    },
+
+    setCompiled: function(compiled){
+        this._compiled = compiled;
+        return this;
     },
 
     compile:function(data){
-        var pattern = /\{\{(.+?)\}\}/g;
-        var tokens  = Util.regMatches(this.Template, pattern, 1);
-        var string  = this.Template;
 
-        // dynamically create, flatten and localize data object to bring keys into local scope
+        var string  = this._template;
         for(var key in data){ eval('var ' + key + '= data[key]'); }
-
-        // eval the properly scoped string
         var eval_string = eval("'" + string.replace(/{{/gi, "' +").replace(/}}/gi, " +'") + "'");
-
-        this.Compiled = eval_string;
-
-        // store result and return
+        this.setCompiled(eval_string);
         return this;
+        
     },
 
 };

@@ -12,6 +12,10 @@ var Main = {
             record: { welcome:'welcome', user:'Kevin', kids:['lincoln', 'sydnie'], family:{mom:'Sonja', dad:'Berry'}},
         });
 
+        part.compiled.sub(function(html){
+            container.html(html.html);
+        });
+
         setTimeout(function(){
             if(part.getRecord().val('user') === 'Nobody'){
                 part.getRecord().setKeyVal('user', 'Kevin');
@@ -20,6 +24,10 @@ var Main = {
             }
             
         }, 1000);
+
+
+
+        
 
     },
 

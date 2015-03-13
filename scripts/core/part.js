@@ -5,6 +5,7 @@ var Part = {
         newPart.Options    = options || {};
         newPart._template  = options.template || '';
         newPart._record    = options.record || '';
+        newPart.compiled   = Pubsub.create(this);
         newPart.Template   = Template.create(newPart._template) || Template.create();
         newPart.Record     = Record.create(newPart._record) || Record.create();
         newPart.Html       = '';
@@ -19,6 +20,7 @@ var Part = {
     compileTemplate:function(){
         var compiled = this.Template.compile(this.Record.val());
         this.setHtml(compiled.get());
+        this.compiled.pub({ html: this.getHtml() });
         console.log(this.getHtml());
         return compiled;
     },

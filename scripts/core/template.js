@@ -22,7 +22,7 @@ var Template = {
 
     compile:function(data){
 
-        var string  = this._template;
+        var string  = this._template.replace(/(\r\n|\n|\r)/gm,"");
         for(var key in data){ eval('var ' + key + '= data[key]'); }
         var eval_string = eval("'" + string.replace(/{{/gi, "' +").replace(/}}/gi, " +'") + "'");
         this.setCompiled(eval_string);

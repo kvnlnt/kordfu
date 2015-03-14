@@ -38,6 +38,7 @@ var Page = {
         this.getPart(name).instance.compiled.sub(function(evt){
             part.container.html(evt.html);
         }); // register listener for changes
+        return this;
     },
 
     removePart: function(name) {

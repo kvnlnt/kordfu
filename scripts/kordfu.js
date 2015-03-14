@@ -5,10 +5,12 @@ $(document).ready(function(){
     kordfu = App.create('container');
 
     kordfu
-    .addPath('/',           Main.home)
-    .addPath('/page/one',   Main.page_one)
-    .addPath('/page/two',   Main.page_two)
-    .addPath('/page/three', Main.page_three)
+    .addPath('/', Main.dashboard)
+    .addPath('/chords', Main.chords)
+    .addPath('/progressions', Main.progressions)
+    .addPath('/scales', Main.scales)
+    .addPath('/lyrics', Main.lyrics)
+    .addPath('/theory', Main.theory)
     .init();
 
 });

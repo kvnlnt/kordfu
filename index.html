@@ -3,41 +3,40 @@
 <head>
     <title>Lucille</title>
     <meta name="viewport" content="width=device-width, user-scalable=no">
-    <script type="text/javascript" src="vendor/jquery.js"></script>
+
+    <!-- vendor -->
+    <script type="text/javascript" src="app/vendor/jquery.js"></script>
+    <script type="text/javascript" src="app/vendor/teoria.js"></script>
 
     <!-- core -->
-    <script type="text/javascript" src="scripts/core/util.js"></script>
-    <script type="text/javascript" src="scripts/core/part.js"></script>
-    <script type="text/javascript" src="scripts/core/page.js"></script>
-    <script type="text/javascript" src="scripts/core/pubsub.js"></script>
-    <script type="text/javascript" src="scripts/core/router.js"></script>
-    <script type="text/javascript" src="scripts/core/template.js"></script>
-    <script type="text/javascript" src="scripts/core/record.js"></script>
-    <script type="text/javascript" src="scripts/core/view.js"></script>
-    <script type="text/javascript" src="scripts/core/controller.js"></script>
-    <script type="text/javascript" src="scripts/core/app.js"></script>
+    <script type="text/javascript" src="app/core/util.js"></script>
+    <script type="text/javascript" src="app/core/part.js"></script>
+    <script type="text/javascript" src="app/core/page.js"></script>
+    <script type="text/javascript" src="app/core/pubsub.js"></script>
+    <script type="text/javascript" src="app/core/router.js"></script>
+    <script type="text/javascript" src="app/core/template.js"></script>
+    <script type="text/javascript" src="app/core/record.js"></script>
+    <script type="text/javascript" src="app/core/view.js"></script>
+    <script type="text/javascript" src="app/core/controller.js"></script>
+    <script type="text/javascript" src="app/core/app.js"></script>
+
+    <!-- templates -->
+    <script type="text/javascript" src="app/jst/chord_selector.js"></script>
+    <script type="text/javascript" src="app/jst/chords.js"></script>
 
     <!-- parts -->
-    <!-- views -->
+    <script type="text/javascript" src="app/parts/chord_selector.js"></script>
+
     <!-- controllers -->
-    <script type="text/javascript" src="scripts/controllers/main.js"></script>
+    <script type="text/javascript" src="app/controllers/main.js"></script>
 
 </head>
 
 <body>
 
     <h1>Kordfu</h1>
-    <ul id="menu">
-        <li><a href="#/">Dashboard</a></li>
-        <li><a href="#/chords">Chords</a></li>
-        <li><a href="#/progressions">Progressions</a></li>
-        <li><a href="#/scales">Scales</a></li>
-        <li><a href="#/lyrics">Lyrics</a></li>
-        <li><a href="#/theory">Theory</a></li>
-    </ul>
     <div id="container"></div>
-
-    <script type="text/javascript" src="scripts/kordfu.js"></script>
+    <script type="text/javascript" src="app/kordfu.js"></script>
 
 </body>
 

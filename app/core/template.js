@@ -7,6 +7,8 @@ var Template = {
         return newTemplate;
     },
 
+    JST:{},
+
     get:function(){
         return this.getCompiled();
     },
@@ -29,5 +31,20 @@ var Template = {
         return this;
         
     },
+
+    includeMenu:function(){
+
+        var menu = '';
+        menu += '<ul id="menu">';
+        menu += '<li><a href="#/">Dashboard</a></li>';
+        menu += '<li><a href="#/chords">Chords</a></li>';
+        menu += '<li><a href="#/progressions">Progressions</a></li>';
+        menu += '<li><a href="#/scales">Scales</a></li>';
+        menu += '<li><a href="#/lyrics">Lyrics</a></li>';
+        menu += '<li><a href="#/theory">Theory</a></li>';
+        menu += '</ul>';
+
+        return menu;
+    }
 
 };

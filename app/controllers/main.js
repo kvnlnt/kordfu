@@ -13,7 +13,7 @@ var Main = {
         var welcome_part = Part.create({ jst: welcome_jst, data: welcome_data });
 
         // page
-        var dashboard_jst  = '<h2>{{ title }}</h2><div id="welcome"></div>';
+        var dashboard_jst  = '{{ Template.includeMenu() }}<h2>{{ title }}</h2><div id="welcome"></div>';
         var dashboard_data = { title: 'Dashboard' };
         var dashboard_page = Page.create({ jst: dashboard_jst, data: dashboard_data, container: container });
         
@@ -24,17 +24,22 @@ var Main = {
 
     chords: function(container){
 
+        // parts
+        var chord_selector = ChordSelectorPart.create({ jst: Template.JST.chordSelector });
+
         // page
-        var chords_jst  = '<h2>{{ title }}</h2>';
         var chords_data = { title: 'Chords' };
-        var chords_page = Page.create({ jst: chords_jst, data: chords_data, container: container });
+        var chords_page = Page.create({ jst: Template.JST.chords, data: chords_data, container: container });
+
+        // add parts
+        chords_page.addPart('chord_selector', chord_selector, '#chord_selector');
 
     },
 
     progressions: function(container){
         
         // page
-        var progressions_jst  = '<h2>{{ title }}</h2>';
+        var progressions_jst  = '{{ Template.includeMenu() }}<h2>{{ title }}</h2>';
         var progressions_data = { title: 'Progressions' };
         var progressions_page = Page.create({ jst: progressions_jst, data: progressions_data, container: container });
 
@@ -43,7 +48,7 @@ var Main = {
     scales: function(container){
         
         // page
-        var scales_jst  = '<h2>{{ title }}</h2>';
+        var scales_jst  = '{{ Template.includeMenu() }}<h2>{{ title }}</h2>';
         var scales_data = { title: 'Scales' };
         var scales_page = Page.create({ jst: scales_jst, data: scales_data, container: container });
 
@@ -52,7 +57,7 @@ var Main = {
     lyrics: function(container){
         
         // page
-        var lyrics_jst  = '<h2>{{ title }}</h2>';
+        var lyrics_jst  = '{{ Template.includeMenu() }}<h2>{{ title }}</h2>';
         var lyrics_data = { title: 'Lyrics' };
         var lyrics_page = Page.create({ jst: lyrics_jst, data: lyrics_data, container: container });
 
@@ -61,7 +66,7 @@ var Main = {
     theory: function(container){
         
         // page
-        var theory_jst  = '<h2>{{ title }}</h2>';
+        var theory_jst  = '{{ Template.includeMenu() }}<h2>{{ title }}</h2>';
         var theory_data = { title: 'Theory' };
         var theory_page = Page.create({ jst: theory_jst, data: theory_data, container: container });
 

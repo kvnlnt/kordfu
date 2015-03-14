@@ -13,9 +13,11 @@ var Part = {
         return newPart;
     },
 
-    init: function(){
-        this.compileTemplate();
-        this.record.recordChanged.sub(this.compileTemplate.bind(this));
+    init: function(scope){
+        scope = scope || this;
+        scope.compileTemplate();
+        scope.record.recordChanged.sub(scope.compileTemplate.bind(scope));
+        console.log('part init');
     },
 
     compileTemplate:function(){

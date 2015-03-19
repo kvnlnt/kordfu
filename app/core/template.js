@@ -22,14 +22,31 @@ var Template = {
         return this;
     },
 
-    compile:function(data){
+    engine: function(html, options) {
+        var re = /<%([^%>]+)?%>/g;
+        var reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g;
+        var code = 'var r=[];\n';
+        var cursor = 0;
+        var match;
+        var add = function(line, js) {
+            js? (code += line.match(reExp) ? line + '\n' : 'r.push(' + line + ');\n') :
+                (code += line != '' ? 'r.push("' + line.replace(/"/g, '\\"') + '");\n' : '');
+            return add;
+        }
+        while(match = re.exec(html)) {
+            add(html.slice(cursor, match.index))(match[1], true);
+            cursor = match.index + match[0].length;
+        }
+        add(html.substr(cursor, html.length - cursor));
+        code += 'return r.join("");';
+        return new Function(code.replace(/[\r\t\n]/g, '')).apply(options);
+    },
 
+    compile:function(data){
         var string  = this._template.replace(/(\r\n|\n|\r)/gm,"");
-        for(var key in data){ eval('var ' + key + '= data[key]'); }
-        var eval_string = eval("'" + string.replace(/{{/gi, "' +").replace(/}}/gi, " +'") + "'");
-        this.setCompiled(eval_string);
+        var compiled_string = this.engine(string, data);
+        this.setCompiled(compiled_string);
         return this;
-        
     },
 
     includeMenu:function(){

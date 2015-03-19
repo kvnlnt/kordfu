@@ -13,7 +13,7 @@ var Main = {
         var welcome_part = Part.create({ jst: welcome_jst, data: welcome_data });
 
         // page
-        var dashboard_jst  = '{{ Template.includeMenu() }}<h2>{{ title }}</h2><div id="welcome"></div>';
+        var dashboard_jst  = '<% Template.includeMenu() %><h2><% this.title %></h2><div id="welcome"></div>';
         var dashboard_data = { title: 'Dashboard' };
         var dashboard_page = Page.create({ jst: dashboard_jst, data: dashboard_data, container: container });
         
@@ -25,7 +25,8 @@ var Main = {
     chords: function(container){
 
         // parts
-        var chord_selector = ChordSelectorPart.create({ jst: Template.JST.chordSelector });
+        var chord_selector_data = { roots:['C','D','E','F','G','A'] };
+        var chord_selector = ChordSelectorPart.create({ jst: Template.JST.chordSelector, data: chord_selector_data });
 
         // page
         var chords_data = { title: 'Chords' };
@@ -39,7 +40,7 @@ var Main = {
     progressions: function(container){
         
         // page
-        var progressions_jst  = '{{ Template.includeMenu() }}<h2>{{ title }}</h2>';
+        var progressions_jst  = '{{ Template.includeMenu() }}<h2><% this.title %></h2>';
         var progressions_data = { title: 'Progressions' };
         var progressions_page = Page.create({ jst: progressions_jst, data: progressions_data, container: container });
 

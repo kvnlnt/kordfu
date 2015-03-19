@@ -4,7 +4,7 @@ var Part = {
         var newPart        = Object.create(this);
         newPart._options   = options || {};
         newPart._jst       = options.jst || '';
-        newPart._data      = options.data || '';
+        newPart._data      = this._data || options.data || '';
         newPart._html      = '';
         newPart.compiled   = Pubsub.create(this);
         newPart.template   = Template.create(newPart._jst) || Template.create();
@@ -14,10 +14,9 @@ var Part = {
     },
 
     init: function(scope){
-        scope = scope || this;
+        var scope = scope || this;
         scope.compileTemplate();
         scope.record.recordChanged.sub(scope.compileTemplate.bind(scope));
-        console.log('part init');
     },
 
     compileTemplate:function(){
@@ -41,7 +40,7 @@ var Part = {
     },
 
     setRecord:function(record){
-        this.record = record;
+        this.record = Record.create(record) || Record.create();;
         return this;
     }, 
 

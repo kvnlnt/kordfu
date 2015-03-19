@@ -3,12 +3,14 @@ var Util = {
     // USAGE
     // var pattern = /\{\{(.+?)\}\}/g;
     // var tokens  = Util.regMatches(this._template, pattern, 1);
-    regMatches: function(string, regex, index) {
-        var index = index || (index = 1); // default to the first capturing group
+    regMatches: function(str, re, groups) {
+        var m;
         var matches = [];
-        var match;
-        while (match = regex.exec(string)) {
-            matches.push(match[index]);
+        while ((m = re.exec(str)) != null) {
+            if (m.index === re.lastIndex) {
+                re.lastIndex++;
+            }
+            matches.push(m.slice(1, groups));
         }
         return matches;
     }

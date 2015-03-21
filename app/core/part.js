@@ -4,19 +4,24 @@ var Part = {
         var newPart        = Object.create(this);
         newPart._options   = options || {};
         newPart._jst       = options.jst || '';
-        newPart._data      = this._data || options.data || '';
-        newPart._html      = '';
+        newPart._html      = options.html || '';
+        newPart._container = options.container || null;
         newPart.compiled   = Pubsub.create(this);
+        newPart.dom        = {};
         newPart.template   = Template.create(newPart._jst) || Template.create();
-        newPart.record     = Record.create(newPart._data) || Record.create();
-        newPart.init();
+        newPart.record     = options.record || Record.create();
         return newPart;
     },
 
     init: function(scope){
         var scope = scope || this;
         scope.compileTemplate();
-        scope.record.recordChanged.sub(scope.compileTemplate.bind(scope));
+        scope.registerEvents();
+        return scope;
+    },
+
+    registerEvents:function(){
+        return this;
     },
 
     compileTemplate:function(){
@@ -52,5 +57,14 @@ var Part = {
         this.template = template;
         return this;
     },
+
+    getContainer:function(){
+        return this._container;
+    },
+
+    setContainer:function(container){
+        this._container = container;
+        return this;
+    }
 
 };

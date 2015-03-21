@@ -7,8 +7,6 @@ var Template = {
         return newTemplate;
     },
 
-    JST:{},
-
     get:function(){
         return this.getCompiled();
     },

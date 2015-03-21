@@ -4,7 +4,6 @@ var Page = {
         var newPage         = Object.create(this);
         newPage._options    = options || {};
         newPage._jst        = options.jst || '';
-        newPage._data       = options.data || '';
         newPage._html       = '';
         newPage._parts      = {};
         newPage._container  = options.container || $('body');
@@ -12,7 +11,7 @@ var Page = {
         newPage.partRemoved = Pubsub.create(this);
         newPage.partAdded   = Pubsub.create(this);
         newPage.template    = Template.create(newPage._jst) || Template.create();
-        newPage.record      = Record.create(newPage._data) || Record.create();
+        newPage.record      = options.record || Record.create();
         newPage.init();
         return newPage;
     },
@@ -31,13 +30,27 @@ var Page = {
     },
 
     addPart: function(name, instance, containerSelector){
-        this._parts[name] = { instance: instance, container: $(containerSelector) };
+
+        // create container object
+        var container = $(containerSelector);
+
+        // add this part to a list to keep track
+        this._parts[name] = { instance: instance, container: container };
+
+        // set up render listening on the container
         var part = this.getPart(name);
         this.partAdded.pub({ part: part }); // broadcast added
         part.container.html(part.instance.getHtml()); // populate container
         this.getPart(name).instance.compiled.sub(function(evt){
             part.container.html(evt.html);
         }); // register listener for changes
+
+        // let the part instance know what container it's in
+        instance.setContainer(container);
+
+        // now init the instance
+        instance.init();
+
         return this;
     },
 

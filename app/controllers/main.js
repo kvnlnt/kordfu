@@ -8,14 +8,14 @@ var Main = {
     dashboard: function(container){
 
         // parts
-        var welcome_jst  = '<strong>Welcome</strong> {{ user }}';
-        var welcome_data = { user:'Kevin'};
-        var welcome_part = Part.create({ jst: welcome_jst, data: welcome_data });
+        var welcome_jst  = '<strong>Welcome</strong> <% this.user %>';
+        var welcome_data = Record.create({ user: 'Kevin'});
+        var welcome_part = Part.create({ jst: welcome_jst, record: welcome_data, container: container });
 
         // page
         var dashboard_jst  = '<% Template.includeMenu() %><h2><% this.title %></h2><div id="welcome"></div>';
-        var dashboard_data = { title: 'Dashboard' };
-        var dashboard_page = Page.create({ jst: dashboard_jst, data: dashboard_data, container: container });
+        var dashboard_data = Record.create({ title: 'Dashboard' });
+        var dashboard_page = Page.create({ jst: dashboard_jst, record: dashboard_data, container: container });
         
         // add parts
         dashboard_page.addPart('welcome', welcome_part, '#welcome');
@@ -24,16 +24,36 @@ var Main = {
 
     chords: function(container){
 
-        // parts
-        var chord_selector_data = { roots:['C','D','E','F','G','A'] };
-        var chord_selector = ChordSelectorPart.create({ jst: Template.JST.chordSelector, data: chord_selector_data });
+        // records
+        var chord_selector_record = Record.create({ root:'C', acci:'', qual:'' });
+        var chord_data_record = Record.create({ 
+            chord:'C',
+            dominant:'G',
+            subdominant:'F',
+            voicing:'P1, M3, P5',
+            notes:[
+                {note:'C4', freq:261.63, midiKey:40 },
+                {note:'E4', freq:329.63, midiKey:44 },
+                {note:'G4', freq:392.00, midiKey:47 }
+            ],
+            voicings:[]
+        });
 
         // page
-        var chords_data = { title: 'Chords' };
-        var chords_page = Page.create({ jst: Template.JST.chords, data: chords_data, container: container });
+        var page_record = Record.create({ title: 'Chords' });
+        var page = Page.create({ jst: JST.chords, record: page_record, container: container });
 
+        // parts
+        var chord_selector = ChordSelectorPart.create({ jst: JST.chordSelector, record: chord_selector_record });
+        var chord_data = ChordDataPart.create({ jst: JST.chordData, record: chord_data_record });
+
+        // events
+        chord_selector_record.recordChanged.sub(chord_data.setChord.bind(chord_data));
+        
         // add parts
-        chords_page.addPart('chord_selector', chord_selector, '#chord_selector');
+        page
+        .addPart('chord_selector', chord_selector, '#chord_selector')
+        .addPart('chord_data', chord_data, '#chord_data');
 
     },
 

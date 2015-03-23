@@ -25,19 +25,8 @@ var Main = {
     chords: function(container){
 
         // records
-        var chord_selector_record = Record.create({ root:'C', acci:'', qual:'' });
-        var chord_data_record = Record.create({ 
-            chord:'C',
-            dominant:'G',
-            subdominant:'F',
-            voicing:'P1, M3, P5',
-            notes:[
-                {note:'C4', freq:261.63, midiKey:40 },
-                {note:'E4', freq:329.63, midiKey:44 },
-                {note:'G4', freq:392.00, midiKey:47 }
-            ],
-            voicings:[]
-        });
+        var chord_selector_record = Record.create({ root:'C', qual:'' });
+        var chord_data_record = Record.create({ test:[]}); // can leave blank, setup on init
 
         // page
         var page_record = Record.create({ title: 'Chords' });

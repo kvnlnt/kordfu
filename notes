@@ -63,3 +63,28 @@ Controller.prototype = {
     }
 
 };
+
+
+rip jtab:
+var json = {};
+
+_.each(jtab.ChordList(), function(chord){
+
+    var voicings = [];
+
+    for(var i=0; i < 12; i++){
+
+        var voicing = new jtabChord(chord + ':' + i);
+        voicing.chordArray.shift();
+        var filtered_voicing = _.map(voicing.chordArray, function(fingering){ 
+            return fingering[0];
+        });
+        voicings.push(filtered_voicing);
+
+    }
+
+    json[chord] = voicings;
+
+});
+
+document.write(JSON.stringify(json));

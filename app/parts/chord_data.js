@@ -8,8 +8,8 @@ ChordDataPart.registerEvents = function(){
 };
 
 ChordDataPart.init = function(){
-
     Part.init(this);
+    this.set('C');
 
 };
 
@@ -19,7 +19,7 @@ ChordDataPart.set = function(chord){
     this.record.setKeyVal('notes', this.getNotes());
     this.record.setKeyVal('dominant', this.getDominant());
     this.record.setKeyVal('subdominant', this.getSubDominant());
-    this.record.setKeyVal('voicing', this.getVoicing());
+    this.record.setKeyVal('intervals', this.getIntervals());
     this.record.setKeyVal('voicings', this.getVoicings());
     return this;
 
@@ -27,7 +27,7 @@ ChordDataPart.set = function(chord){
 
 ChordDataPart.setChord = function(selector){
 
-    var chord = selector.record.root + selector.record.acci + selector.record.qual;
+    var chord = selector.record.root + selector.record.qual;
     this.set(chord);
     return this;
 
@@ -62,7 +62,7 @@ ChordDataPart.getSubDominant = function(){
 
 };
 
-ChordDataPart.getVoicing = function(){
+ChordDataPart.getIntervals = function(){
 
     var chord = teoria.chord(this.record.val('chord'));
     var intervals = _.map(chord.voicing(), function(voice){ return voice.toString(); });
@@ -72,8 +72,6 @@ ChordDataPart.getVoicing = function(){
 
 ChordDataPart.getVoicings = function(){
 
-    var chords = jtab.Chords[this.record.val('chord')];
-    var voicings = chords[0] + chords[1];
-    return voicings;
+    return chordData[this.record.val('chord')];
 
 };

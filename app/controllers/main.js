@@ -25,8 +25,8 @@ var Main = {
     chords: function(container){
 
         // records
-        var chord_selector_record = Record.create({ root:'C', qual:'' });
-        var chord_data_record = Record.create({ test:[]}); // can leave blank, setup on init
+        var chord_selector_record = ChordSelectorRecord.create();
+        var chord_data_record = ChordDataRecord.create().setChord('C');
 
         // page
         var page_record = Record.create({ title: 'Chords' });
@@ -37,7 +37,10 @@ var Main = {
         var chord_data = ChordDataPart.create({ jst: JST.chordData, record: chord_data_record });
 
         // events
-        chord_selector_record.recordChanged.sub(chord_data.setChord.bind(chord_data));
+        chord_selector_record.recordChanged.sub(function(selector){
+            var chord = selector.record.root + selector.record.qual;
+            chord_data_record.setChord(chord);
+        });
         
         // add parts
         page

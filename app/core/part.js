@@ -17,6 +17,7 @@ var Part = {
         var scope = scope || this;
         scope.compileTemplate();
         scope.registerEvents();
+        scope.record.init(); // auto init record
         return scope;
     },
 

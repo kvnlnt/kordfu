@@ -29,7 +29,8 @@ ChordSelectorPart.pickChord = function(e){
 
     this
     .record
-    .setKeyVal('root', root)
-    .setKeyVal('qual', qual);
+    .set({root:root, qual:qual});
+
+    return this;
 
 };
